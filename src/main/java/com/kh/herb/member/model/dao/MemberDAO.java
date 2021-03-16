@@ -2,6 +2,8 @@ package com.kh.herb.member.model.dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,8 +19,17 @@ public class MemberDAO {
 	public MemberDAO() {
 	}
 	
+	public boolean loginMember(MemberVO member) {
+		String name = sqlSession.selectOne("Member.loginMember", member);
+		return (name == null) ? false : true;
+	}
+	
+	public void logoutMember(HttpSession session) {
+		System.out.println("로그인 세션 삭제");
+		session.invalidate();
+	}
 	public List<MemberVO> selectMemberAll() throws Exception{
-		List<MemberVO> memberList = sqlSession.selectList("Member.selectListAll");
+		List<MemberVO> memberList = sqlSession.selectList("Member.selectMemberAll");
 		return memberList;
 	}
 	
@@ -40,6 +51,12 @@ public class MemberDAO {
 	public int deleteMember(MemberVO memberVO) throws Exception{
 		int result = sqlSession.update("Member.deleteMember",memberVO);
 		return result;
+	}
+	
+	public int joinIdCheck(MemberVO member) throws Exception{
+		int cnt = sqlSession.selectOne("Member.joinIdCheck", member);
+		System.out.println(member.getUserId());
+		return cnt;
 	}
 	
 	

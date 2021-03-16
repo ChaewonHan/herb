@@ -2,11 +2,15 @@ package com.kh.herb.member.model.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.kh.herb.member.model.dao.MemberDAO;
 import com.kh.herb.member.model.vo.MemberVO;
 
+@Service
 public class MemberServiceImpl implements MemberService{
 
 	@Autowired
@@ -37,6 +41,27 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int deleteMember(MemberVO memberVO) throws Exception {
 		return memberDao.deleteMember(memberVO);
+	}
+
+	@Override
+	public int joinIdCheck(MemberVO member) throws Exception {
+		int cnt = memberDao.joinIdCheck(member);
+		return cnt;
+	}
+
+	@Override
+	public boolean loginMember(MemberVO member, HttpSession session) {
+		
+		boolean result = memberDao.loginMember(member);
+		if (result == true) {
+			session.setAttribute("userId",member.getUserId());
+		}
+		return result;
+	}
+
+	@Override
+	public void logoutMember(HttpSession session) {
+		memberDao.logoutMember(session);
 	}
 	
 }

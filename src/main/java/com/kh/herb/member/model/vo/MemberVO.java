@@ -1,6 +1,5 @@
 package com.kh.herb.member.model.vo;
 
-import java.util.Date;
 
 public class MemberVO {
 	private String userId;
@@ -11,7 +10,6 @@ public class MemberVO {
 	private String userAddress;
 	private String userBirth;
 	private char userDel;
-	private Date userDate;
 	
 	public String getUserId() {
 		return userId;
@@ -60,11 +58,5 @@ public class MemberVO {
 	}
 	public void setUserDel(char userDel) {
 		this.userDel = userDel;
-	}
-	public Date getUserDate() {
-		return userDate;
-	}
-	public void setUserDate(Date userDate) {
-		this.userDate = userDate;
 	}
 }
